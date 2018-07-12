@@ -1,0 +1,6 @@
+.PHONY: all
+
+all: $(patsubst %.pdf, %.png,  $(wildcard *.pdf))
+
+%.png: %.pdf
+	inkscape --export-png=$@ $<
