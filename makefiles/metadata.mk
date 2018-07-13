@@ -1,0 +1,3 @@
+PRESENTATION=mypresentation
+CONTENT_MASTER=No-Logo_20_Content
+BREAK_MASTER=Break

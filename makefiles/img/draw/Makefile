@@ -1,9 +1,10 @@
-.PHONY: all png
+.PHONY: all
 
 PDF_DIRS := $(patsubst %.odg, %.pdf.d,  $(wildcard *.odg))
 PDFS := $(patsubst %.odg, %.pdf,  $(wildcard *.odg))
 
 all: $(PDFS) $(PDF_DIRS)
+	touch .
 
 clean:
 	rm -f *.pdf

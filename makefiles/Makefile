@@ -1,0 +1,75 @@
+.PHONY: all clean test
+
+include metadata.mk
+
+# All image files
+DIA = $(wildcard img/dia/*.dia)
+DRAW = $(wildcard img/draw/*.odg)
+PNG = $(wildcard img/png/*.png)
+SVG = $(wildcard img/svg/*.svg)
+IMG = $(DIA) $(DRAW) $(PNG) $(SVG)
+
+# Rule for recursively running make in an image type directory and linking the
+# resulting PNGs directly into img/.
+define img_recursive
+	(cd $(1); $(MAKE))
+	for png in $$(find $(1) -name '*.png'); \
+	  do ln -sr $$png img; \
+		done
+endef
+
+FILES := \
+  presentation.md \
+	presentation-4-3.odp \
+	presentation-4-3.pdf \
+	presentation-16-9.odp \
+	presentation-16-9.pdf \
+	transcript.md \
+	transcript.html
+
+all: img $(FILES) $(PRESENTATION) $(PRESENTATION).tar.bz2
+
+clean:
+	rm -f $(FILES)
+	(cd img/; make clean)
+	rm -rf $(PRESENTATION)
+	rm -rf $(PRESENTATION).tar.bz2
+
+img: $(IMG)
+	mkdir -p $@
+	(cd $@; $(MAKE))
+
+presentation.md: src/*.md
+	echo 'changequote(,)' | cat - src/main.md | m4 > $@
+
+$(PRESENTATION): $(FILES)
+	mkdir -p $(PRESENTATION)
+	touch $(PRESENTATION)
+	cp img/*.png $(PRESENTATION)
+	cp $(FILES) $(PRESENTATION)
+
+presentation-4-3.odp: presentation.md templates/template-4-3.odp img/
+	odpdown \
+	-p 1 \
+	--content-master $(CONTENT_MASTER) \
+	--break-master $(BREAK_MASTER) \
+	presentation.md templates/template-4-3.odp $@
+
+presentation-16-9.odp: presentation.md templates/template-16-9.odp img/
+	odpdown \
+	-p 1 \
+	--content-master $(CONTENT_MASTER) \
+	--break-master $(BREAK_MASTER) \
+	presentation.md templates/template-16-9.odp $@
+
+%.html: %.md
+	pandoc -s --toc -f markdown_github -t html5 -o $@ $<
+
+%.pdf: %.odp
+	libreoffice --convert-to pdf --outdir $(shell dirname $<) $<
+
+transcript.md: presentation.md
+	bin/htmlcomments $< > $@
+
+$(PRESENTATION).tar.bz2:	$(PRESENTATION)
+	tar -cjf $@ $(PRESENTATION)
