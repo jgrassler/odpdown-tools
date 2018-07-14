@@ -4,7 +4,7 @@
 # their contents in the order they are encountered. It is usually used to
 # generate a transcript file from HTML comments added to odpdown slides.
 #
-# Copyright (c) 2018 Johannes Graßler <johannes@btw23.de>
+# Copyright (c) 2018 Johannes Grassler <johannes@btw23.de>
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
