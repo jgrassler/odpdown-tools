@@ -1,12 +1,11 @@
 .PHONY: all
 
-PNGS := $(patsubst %.svg, %.dia,  $(wildcard *.svg))
+PNGS := $(patsubst %.dia, %.png,  $(wildcard *.dia))
 
 all: $(PNGS)
-	touch .
 
 clean:
 	rm -f *.png
 
-%.png: *.dia
+%.png: %.dia
 	dia -e $@ -t png $<
