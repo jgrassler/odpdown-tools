@@ -1,7 +1,7 @@
 .PHONY: all install clean
 
-include config.mk
 include defaults.mk
+include config.mk
 
 all: odpdown-init
 
