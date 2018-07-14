@@ -1,5 +1,5 @@
 # Prefix directory other variables are based on (if not set expclitly)
-PREFIX=/usr
+PREFIX=/usr/local
 
 # Directory where odpdown-init will end up
 BINDIR=$(PREFIX)/bin
