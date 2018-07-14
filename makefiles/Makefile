@@ -9,15 +9,6 @@ PNG = $(wildcard img/png/*.png)
 SVG = $(wildcard img/svg/*.svg)
 IMG = $(DIA) $(DRAW) $(PNG) $(SVG)
 
-# Rule for recursively running make in an image type directory and linking the
-# resulting PNGs directly into img/.
-define img_recursive
-	(cd $(1); $(MAKE))
-	for png in $$(find $(1) -name '*.png'); \
-	  do ln -sr $$png img; \
-		done
-endef
-
 FILES := \
   presentation.md \
 	presentation-4-3.odp \
@@ -32,6 +23,7 @@ all: $(FILES) $(PRESENTATION) $(PRESENTATION).tar.bz2
 clean:
 	rm -f $(FILES)
 	(cd img/; make clean)
+	touch $(IMG)
 	rm -rf $(PRESENTATION)
 	rm -rf $(PRESENTATION).tar.bz2
 
