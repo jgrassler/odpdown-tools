@@ -1,0 +1,66 @@
+#!/bin/sh
+
+set -e
+
+# odpdown-init: initializes a directory with an empty odpdown presentation
+
+THEMEDIR="__THEMEDIR__"
+DATADIR="__DATADIR__"
+
+source $THEMEDIR/default.sh
+
+destdir=$1
+theme=$2
+
+usage()
+  {
+  echo "usage: $1 <directory> [theme]"
+  echo "       $1 -l"
+  }
+
+if [ -z "$destdir" ]; then
+  echo "No directory specified, aborting." 1>&2
+  usage
+  exit 1
+fi
+
+if [ -z "$theme"; ] then
+  theme=$THEME # default theme set in default.sh
+fi
+
+if [ ! -d "${THEMEDIR}/${theme}" ]; then
+  echo "${theme}: no such theme. List available themes with '$1 -l'" 1>&2
+  exit 1
+fi
+
+if [ "$destdir" = "-l" ]; then
+  for theme in ${THEMEDIR}/*
+    do
+    echo "$theme    $(head -n 1 $theme/description.txt)"
+    done
+  exit 0
+fi
+
+if [ -e "$destdir" -a ! -d "$destdir" ]; then
+  echo "$destdir exists and is not a directory, aborting."
+  usage
+  exit 1
+fi
+
+mkdir -p "$destdir"
+
+cp -a "${THEMEDIR}/${theme}/templates" "$destdir"
+cp -a "${THEMEDIR}/${theme}/templates" "$destdir"
+cp -a "${DATADIR}/makefiles/*" "$destdir"
+
+echo "Empty presentation with theme $theme created in directory $destdir. Next steps:"
+echo
+echo "1. Edit ${destdir}/metadata.mk to set a presentation base file name (white space not recommended; keep it short)"
+echo
+echo "2. Edit the title slide of ${destdir}/templates/template-4-3.odp and ${destdir}/templates/template-16-9.odp"
+echo
+echo "3. Write your slides in ${destdir}/slides/main.md (and files included from there)"
+echo
+echo "4. Drop any images you may have in the appropriate subdirectory of ${destdir}/img (see ${destdir}/img/README.md for details)"
+echo
+echo "5. Compile your slides by running 'make' in ${destdir}"

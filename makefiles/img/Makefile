@@ -7,7 +7,7 @@ clean: cleanlinks
 
 cleanlinks:
 	find . -maxdepth 1 -type l | xargs rm -f
-	for png in $$(find . -type f -name '*.png'); \
+	for png in $$(find dia draw svg . -type f -name '*.png'); \
 		do ln -sr $$png .; \
 	done
 
