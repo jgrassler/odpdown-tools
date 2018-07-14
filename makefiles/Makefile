@@ -1,4 +1,4 @@
-.PHONY: all clean test img
+.PHONY: all clean test
 
 include metadata.mk
 
@@ -27,7 +27,7 @@ FILES := \
 	transcript.md \
 	transcript.html
 
-all: img $(FILES) $(PRESENTATION) $(PRESENTATION).tar.bz2
+all: $(FILES) $(PRESENTATION) $(PRESENTATION).tar.bz2
 
 clean:
 	rm -f $(FILES)
@@ -36,8 +36,8 @@ clean:
 	rm -rf $(PRESENTATION).tar.bz2
 
 img: $(IMG)
-	mkdir -p $@
 	(cd $@; $(MAKE))
+	touch $@
 
 presentation.md: src/*.md
 	echo 'changequote(,)' | cat - src/main.md | m4 > $@
@@ -48,14 +48,14 @@ $(PRESENTATION): $(FILES)
 	cp img/*.png $(PRESENTATION)
 	cp $(FILES) $(PRESENTATION)
 
-presentation-4-3.odp: presentation.md templates/template-4-3.odp img/
+presentation-4-3.odp: presentation.md templates/template-4-3.odp img
 	odpdown \
 	-p 1 \
 	--content-master $(CONTENT_MASTER) \
 	--break-master $(BREAK_MASTER) \
 	presentation.md templates/template-4-3.odp $@
 
-presentation-16-9.odp: presentation.md templates/template-16-9.odp img/
+presentation-16-9.odp: presentation.md templates/template-16-9.odp img
 	odpdown \
 	-p 1 \
 	--content-master $(CONTENT_MASTER) \
