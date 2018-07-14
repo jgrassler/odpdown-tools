@@ -1,13 +1,17 @@
-.PHONY: all cleanlinks
+.PHONY: all clean draw/ svg/ dia/ links linkclean
 
-all: draw/ svg/ dia/ cleanlinks
+all: draw/ svg/ dia/ links
 
-clean: cleanlinks
-	rm -f *.png
-
-cleanlinks:
+linkclean:
 	find . -maxdepth 1 -type l | xargs rm -f
-	for png in $$(find dia draw svg . -type f -name '*.png'); \
+
+clean: linkclean
+	(cd dia; $(MAKE) clean)
+	(cd draw; $(MAKE) clean)
+	(cd svg; $(MAKE) clean)
+
+links: linkclean
+	for png in $$(find dia draw svg -type f -name '*.png'); \
 		do ln -sr $$png .; \
 	done
 
