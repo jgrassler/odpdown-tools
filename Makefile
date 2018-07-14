@@ -13,6 +13,7 @@ odpdown-init: odpdown-init.in defaults.mk config.mk
 	    -e 's#__DATADIR__#${DATADIR}#g' $< > $@
 
 install: all
+	install -D -d -m 755 ${BINDIR}
 	install -D -m 755 odpdown-init ${BINDIR}
 	install -D -d -m 755 ${DATADIR}
 	tar -cf - makefiles | tar -C ${DATADIR} -xf -

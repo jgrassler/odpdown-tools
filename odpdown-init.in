@@ -24,7 +24,7 @@ if [ -z "$destdir" ]; then
   exit 1
 fi
 
-if [ -z "$theme"; ] then
+if [ -z "$theme" ]; then
   theme=$THEME # default theme set in default.sh
 fi
 
@@ -34,9 +34,9 @@ if [ ! -d "${THEMEDIR}/${theme}" ]; then
 fi
 
 if [ "$destdir" = "-l" ]; then
-  for theme in ${THEMEDIR}/*
+  for theme in $(find ${THEMEDIR} -maxdepth 1 -type d | tail -n +2)
     do
-    echo "$theme    $(head -n 1 $theme/description.txt)"
+    echo "$(basename "$theme")    $(head -n 1 ${theme}/description.txt)"
     done
   exit 0
 fi
@@ -49,18 +49,27 @@ fi
 
 mkdir -p "$destdir"
 
-cp -a "${THEMEDIR}/${theme}/templates" "$destdir"
-cp -a "${THEMEDIR}/${theme}/templates" "$destdir"
-cp -a "${DATADIR}/makefiles/*" "$destdir"
+tar -C "${DATADIR}/makefiles" -cf - . | tar -C "$destdir" -xf - --exclude=description.txt
+tar -C "${THEMEDIR}/${theme}" -cf - . | tar -C "$destdir" -xf - --exclude=description.txt
 
-echo "Empty presentation with theme $theme created in directory $destdir. Next steps:"
+echo "Empty presentation with theme '$theme' created in directory "
 echo
-echo "1. Edit ${destdir}/metadata.mk to set a presentation base file name (white space not recommended; keep it short)"
+echo "  '$destdir'."
 echo
-echo "2. Edit the title slide of ${destdir}/templates/template-4-3.odp and ${destdir}/templates/template-16-9.odp"
+echo "Next steps:"
 echo
-echo "3. Write your slides in ${destdir}/slides/main.md (and files included from there)"
+echo "  1. Edit ${destdir}/metadata.mk to set a presentation base file "
+echo "     name (white space not recommended; keep it short)"
 echo
-echo "4. Drop any images you may have in the appropriate subdirectory of ${destdir}/img (see ${destdir}/img/README.md for details)"
+echo "  2. Edit the title slide of "
+echo "             ${destdir}/templates/template-4-3.odp "
+echo "         and ${destdir}/templates/template-16-9.odp"
 echo
-echo "5. Compile your slides by running 'make' in ${destdir}"
+echo "  3. Write your slides in ${destdir}/slides/main.md (and files "
+echo "     included from there)"
+echo
+echo "  4. Drop any images you may have in the appropriate subdirectory "
+echo "     of ${destdir}/img (see ${destdir}/img/README.md for details)"
+echo
+echo "  5. Compile your slides by running 'make' in ${destdir}"
+echo
