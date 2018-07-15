@@ -47,6 +47,11 @@ if [ -e "$destdir" -a ! -d "$destdir" ]; then
   exit 1
 fi
 
+if [ -e "$destdir"/metadata.mk ]; then
+  echo "$destdir appears to have been initialized by $(basename $0) already, aborting."
+  exit 1
+fi
+
 mkdir -p "$destdir"
 
 tar -C "${DATADIR}/makefiles" -cf - . | tar -C "$destdir" -xf - --exclude=description.txt
