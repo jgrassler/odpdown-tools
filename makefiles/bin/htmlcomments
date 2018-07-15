@@ -33,10 +33,14 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 from __future__ import print_function
-from HTMLParser import HTMLParser
 
 import codecs
 import sys
+
+if sys.version_info.major == 2:
+    from HTMLParser import HTMLParser
+elif sys.version_info.major >= 3:
+    from html.parser import HTMLParser
 
 class CommentExtractor(HTMLParser):
     def __init__(self):
@@ -50,7 +54,10 @@ e = CommentExtractor()
 if len(sys.argv) > 1:
     for arg in sys.argv[1:]:
         try:
-            r = codecs.getreader("utf8")(open(arg))
+            if sys.version_info.major == 2:
+              r = codecs.getreader("utf8")(open(arg))
+            elif sys.version_info.major >= 3:
+              r = open(arg, mode='r', encoding="utf8", buffering=1)
             for line in r.readlines():
                 e.feed(line)
             e.close()
