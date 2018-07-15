@@ -23,7 +23,7 @@ all: $(FILES) $(PRESENTATION) $(PRESENTATION).tar.bz2
 clean:
 	rm -f $(FILES)
 	(cd img/; make clean)
-	touch $(IMG)
+	if [ -n "$$(find img -maxdepth 1 -name '*.png')" ]; then touch $(IMG); fi
 	rm -rf $(PRESENTATION)
 	rm -rf $(PRESENTATION).tar.bz2
 
@@ -38,8 +38,10 @@ $(PRESENTATION): $(FILES)
 	rm -rf $(PRESENTATION)
 	mkdir -p $(PRESENTATION)
 	touch $(PRESENTATION)
-	mkdir -p $(PRESENTATION)/img
-	cp img/*.png $(PRESENTATION)/img
+	if [ -n "$$(find img -maxdepth 1 -name '*.png')" ]; then \
+	  mkdir -p $(PRESENTATION)/img; \
+	  cp img/*.png $(PRESENTATION)/img; \
+	fi
 	cp $(FILES) $(PRESENTATION)
 
 presentation-4-3.odp: presentation.md templates/template-4-3.odp img
