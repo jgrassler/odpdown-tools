@@ -19,6 +19,13 @@ FILES := \
 	transcript.html
 
 all: $(FILES) $(PRESENTATION) $(PRESENTATION).tar.bz2
+	@echo "Presentation compiled."
+	@echo
+	@echo "Distribution files (presentation and transcript) are in"
+	@echo
+	@echo "  $(PRESENTATION)/"
+	@echo
+	@echo "$(PRESENTATION).tar.bz2 contains the contents of the $(PRESENTATION)/ directory."
 
 clean:
 	rm -f $(FILES)

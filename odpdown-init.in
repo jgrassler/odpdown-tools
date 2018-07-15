@@ -52,24 +52,29 @@ mkdir -p "$destdir"
 tar -C "${DATADIR}/makefiles" -cf - . | tar -C "$destdir" -xf - --exclude=description.txt
 tar -C "${THEMEDIR}/${theme}" -cf - . | tar -C "$destdir" -xf - --exclude=description.txt
 
-echo "Empty presentation with theme '$theme' created in directory "
+echo "Empty[*] presentation with theme '$theme' created in directory"
 echo
 echo "  '$destdir'."
 echo
 echo "Next steps:"
 echo
-echo "  1. Edit ${destdir}/metadata.mk to set a presentation base file "
+echo "  1. Edit ${destdir}/metadata.mk to set a presentation base file"
 echo "     name (white space not recommended; keep it short)"
 echo
-echo "  2. Edit the title slide of "
-echo "             ${destdir}/templates/template-4-3.odp "
+echo "  2. Edit the title slide of"
+echo "             ${destdir}/templates/template-4-3.odp"
 echo "         and ${destdir}/templates/template-16-9.odp"
 echo
-echo "  3. Write your slides in ${destdir}/slides/main.md (and files "
+echo "  3. Write your slides in ${destdir}/slides/main.md (and files"
 echo "     included from there)"
 echo
-echo "  4. Drop any images you may have in the appropriate subdirectory "
+echo "  4. Drop any images you may have in the appropriate subdirectory"
 echo "     of ${destdir}/img (see ${destdir}/img/README.md for details)"
 echo
 echo "  5. Compile your slides by running 'make' in ${destdir}"
+echo
+echo "[*] The presentation is not entirely empty since it already"
+echo "    contains some sample slides. If you like, you can skip"
+echo "    straight ahead to step 5 and compile this sample"
+echo "    presentation."
 echo
