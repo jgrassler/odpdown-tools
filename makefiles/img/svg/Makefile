@@ -1,12 +1,11 @@
 .PHONY: all
 
-PNGS := $(patsubst %.svg, %.pdf,  $(wildcard *.svg))
+PNGS := $(patsubst %.svg, %.png,  $(wildcard *.svg))
 
 all: $(PNGS)
-	touch ../
 
 clean:
 	rm -f *.png
 
-%.png: *.pdf
+%.png: %.svg
 	inkscape --export-png=$@ $<
