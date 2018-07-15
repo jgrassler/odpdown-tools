@@ -14,8 +14,8 @@ theme=$2
 
 usage()
   {
-  echo "usage: $1 <directory> [theme]"
-  echo "       $1 -l"
+  echo "usage: $0 <directory> [theme]"
+  echo "       $0 -l"
   }
 
 if [ -z "$destdir" ]; then
@@ -29,7 +29,7 @@ if [ -z "$theme" ]; then
 fi
 
 if [ ! -d "${THEMEDIR}/${theme}" ]; then
-  echo "${theme}: no such theme. List available themes with '$1 -l'" 1>&2
+  echo "${theme}: no such theme. List available themes with '$0 -l'" 1>&2
   exit 1
 fi
 

@@ -1,4 +1,8 @@
-version 0.2.0 (2018-07-15)
+version 0.2.2 (2018-07-15)
+
+  - Fix usage output
+
+version 0.2.1 (2018-07-15)
 
   - Add INSTALL_DATADIR and INSTALL_THEMEDIR variables (useful for packagers)
 
