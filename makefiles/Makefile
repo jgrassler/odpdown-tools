@@ -35,9 +35,11 @@ presentation.md: src/*.md
 	echo 'changequote(,)' | cat - src/main.md | m4 > $@
 
 $(PRESENTATION): $(FILES)
+	rm -rf $(PRESENTATION)
 	mkdir -p $(PRESENTATION)
 	touch $(PRESENTATION)
-	cp img/*.png $(PRESENTATION)
+	mkdir -p $(PRESENTATION)/img
+	cp img/*.png $(PRESENTATION)/img
 	cp $(FILES) $(PRESENTATION)
 
 presentation-4-3.odp: presentation.md templates/template-4-3.odp img
