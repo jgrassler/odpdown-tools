@@ -5,7 +5,7 @@ include metadata.mk
 # All image files
 DIA = $(wildcard img/dia/*.dia)
 DRAW = $(wildcard img/draw/*.odg)
-PNG = $(wildcard img/png/*.png)
+PNG = $(shell find img/ -maxdepth 1 -type f -name '*.png')
 SVG = $(wildcard img/svg/*.svg)
 IMG = $(DIA) $(DRAW) $(PNG) $(SVG)
 
@@ -30,7 +30,7 @@ all: $(FILES) $(PRESENTATION) $(PRESENTATION).tar.bz2
 clean:
 	rm -f $(FILES)
 	(cd img/; make clean)
-	if [ -n "$$(find img -maxdepth 1 -name '*.png')" ]; then touch $(IMG); fi
+	if [ -n "$(strip $(IMG))" ]; then touch $(strip $(IMG)); fi
 	rm -rf $(PRESENTATION)
 	rm -rf $(PRESENTATION).tar.bz2
 
