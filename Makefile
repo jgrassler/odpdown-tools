@@ -3,7 +3,10 @@
 include defaults.mk
 include config.mk
 
-all: odpdown-init
+all: config.mk odpdown-init
+
+config.mk:
+	touch config.mk
 
 clean:
 	rm -f odpdown-init
