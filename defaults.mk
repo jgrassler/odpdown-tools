@@ -7,8 +7,12 @@ PREFIX=/usr/local
 # Directory where odpdown-init will end up
 BINDIR=${PREFIX}/bin
 
-# Directory where makefiles/ will end up
+# Directory where odpdown-init will look for makefiles/
 DATADIR=${PREFIX}/share/odpdown-tools
+# Directory where makefiles/ will actually end up (useful for packagers)
+INSTALL_DATADIR=${DATADIR}
 
-# Directory where the content of themes/ will end up
+# Directory where odpdown-init will look for themes/
 THEMEDIR=${DATADIR}/themes
+# Directory where themes/ will actually end up (useful for packagers)
+INSTALL_THEMEDIR=${THEMEDIR}
