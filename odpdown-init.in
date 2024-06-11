@@ -7,7 +7,7 @@ set -e
 THEMEDIR="__THEMEDIR__"
 DATADIR="__DATADIR__"
 
-source $THEMEDIR/default.sh
+. $THEMEDIR/default.sh
 
 destdir=$1
 theme=$2
